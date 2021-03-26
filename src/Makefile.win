@@ -4,8 +4,8 @@
 CPP      = g++.exe
 CC       = gcc.exe
 WINDRES  = windres.exe
-OBJ      = linkedlist.o
-LINKOBJ  = linkedlist.o
+OBJ      = linkedlist.o astack.o selection_sort.o insertion_sort.o
+LINKOBJ  = linkedlist.o astack.o selection_sort.o insertion_sort.o
 LIBS     = -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib" -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -static-libgcc
 INCS     = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include"
 CXXINCS  = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++"
@@ -26,3 +26,12 @@ $(BIN): $(OBJ)
 
 linkedlist.o: linkedlist.c
 	$(CC) -c linkedlist.c -o linkedlist.o $(CFLAGS)
+
+astack.o: astack.c
+	$(CC) -c astack.c -o astack.o $(CFLAGS)
+
+selection_sort.o: selection_sort.c
+	$(CC) -c selection_sort.c -o selection_sort.o $(CFLAGS)
+
+insertion_sort.o: insertion_sort.c
+	$(CC) -c insertion_sort.c -o insertion_sort.o $(CFLAGS)

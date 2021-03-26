@@ -70,7 +70,7 @@ void print_list(struct node *head) {
 	printf("\n");
 }
 
-int main() {
+int test_linked_list() {
 	
 	struct node *start = NULL;
 	insert_end(1,&start);

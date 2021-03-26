@@ -766,3 +766,212 @@ grows as `n` becomes large
 + So simply passing a pointer as an argument to a function will not allow you to make changes to that pointer inside the function
 + The address of a pointer must be passed to the function as an argument `double pointer`
 + The `double pointer` is then dereferenced inside the calling function to manipulate it
+
+## Stacks
++ Abstract data types that contain elements in linear order
++ Insertion and deletion are only allowed at one end
++ One cannot insert or delete elements from the middle of a stack
++ Last in First out structure -> LIFO
+  + The last element in the stack will be the first to be removed
++ Insertion -> `push`
++ Deletion -> `pop`
++ A `push` on a full stack will result in an overflow
++ A `pull` on an empty stack will result in an underflow
++ Always check for full and empty stack on the respective operations
+
+### Array implementation of a Stack
++ 1D Array
++ Use an index variable `top` that keeps track of the element on top of the stack
++ When the stack is empty `top` is -1
++ For a push
+  + `top += 1`
+  + New element is placed at index `top`, `stack[top]` = `new_element`
++ For a pop
+  + Element at index `top` is removed
+  + `top -= 1`
++ TBC
+
+## Sorting Algorithms
++ Keeping data in sorted order allows for the faster retrieval of information through searching
++ All sorting algorithms consist of multiple `passes`
+  + A `pass` is a step in sorting
+  + After each `pass` the data becomes more and more sorted
+  + The data is sorted after the last `pass`
+  + Many comparisons and exchanges can happen during a pass
+
+### Sort placements
++ An `in-place` sort requires no extra storage when sorting, whereas a sorting algorith that is NOT `in-place` requires extra storage to store intermediate results of sorting
++ The extra storage required for sorting that is not `in-place` is proportional to the size of the data `n`
++ An example of a sort that is not `in-place` is merge sort
++ `in-place` sorts might only require a constant number of variables indepedent of the size of data
++ Examples of `in-place` sorts include: selection, bubble, insertion and shell sort
+
+### Sorting efficiency
++ Sorting efficiency is measured by
+  + Space requirement
+  + Run time
++ Basic operations in sorting include
+  + Comparisons
+  + recording movements of elements
++ Therefore the running time of a sorting algorithm can be determined by counting the number of comparisons
++ More comparisons lead to more run time
++ Runtime efficiency is expressed in big O notation
+
+### Sorting Stability
++  Data to be sorted can have duplicate elements
++ A stable sorting algorithm will maintain the relative order of duplicate elements
++ An unstable sorting algorithm may change the relative order of duplicate elements
+
+### Selection Sort
++ Sorting is performed by selecting the smallest element at each step (`pass`)
+and placing it at its proper place
+```
+
+  n elements: a[0] a[1] a[2] . . . a[n-2] a[n-1]
+
+  Pass 1:
+    Find the smallest element from a[0] . . . a[n - 1]
+    Swap with a[0]
+
+  Pass 2:
+    Find the smallest element from a[1] . . . a[n-1]
+    Swap with a[1]
+
+  Pass 3:
+    Find the smallest element from a[2] . . . a[n-1]
+    Swap with a[2]
+
+  . . .
+
+  Pass n-1:
+    Find the smallest element from a[n-2], a[n-1]
+    Swap with a[n-2]
+
+  After this pass the array is sorted
+```
++ Example
+```
+  Array a:
+
+  [45] [38] [59] [12] [66] [23]
+
+  Pass 1:
+    Smallest element from a[0] . . . a[n-1] -> [12]
+    Swap [12] with a[0] = [45]
+
+    [12] [38] [59] [45] [66] [23]
+
+  Pass 2:
+    Smallest element from a[1] . . . a[n-1] -> 23
+    Swap [23] with a[1]
+
+    [12] [23] [59] [45] [66] [38]
+
+  Pass 3:
+    Smallest element from a[2] . . . a[n-1] - > 38
+    Swap [38] with a[2]
+
+    [12] [23] [38] [45] [66] [59]
+
+  Pass 3:
+    Smallest element from a[3] . . . a[n-1] -> 45
+    [45] = a[3]
+    No swap
+
+  Pass 4:
+    Smallest element from a[4] . . . a[n-1] -> 59
+    Swap [59] with a[4]
+
+    [12] [23] [38] [45] [59] [66]
+
+
+  Array sorted after 5 passes
+```
++ Algorithm
+```
+
+  min_index -> variable to hold the index of the smallest element within the
+               range a[i] -> a[n - 1]
+
+  Double for loop
+  for(i=0;i<n-1;i++) {
+    Set the min_index to the current value of i for each iteration, since
+    we need to find the smallest within the next range a[i] . . . a[n-1]
+
+    min_index = i;
+
+    for(j=i+1;j<n;j++){
+      if(a[j]<a[min_index]) {
+        save the new min_index
+        min_index = j;
+      }
+
+      if(i != min_index){
+        The smallest number within the give range has been found
+        temp = a[i];
+        a[i] = a[min_index];
+        a[min_index] = temp;
+      }
+    }
+  }
+
+  Outer loop iterates to the second last element of the array
+  Inner loop executes up until the last element of the array for each iteration
+  of the outer loop
+
+```
++ For Pass 1: (n-1) comparisons
+      Pass 2: (n-2) comparisons
+      Pass 3: (n-3) comparisons
+      . . .
+      Pass n-2: 2 comparisons
+      Pass n-1: 2 comparison
+
++ Therefore the total number of comparisons = n(n-1)/2 = O(n^2)
++ Selection sort is an unstable sort and cannot guarantee the correct relative ordering of duplicate elements
+
+### Insertion Sort
++ Inserting each element in its proper place in an already sorted list
++ Card arrangements
+```
+
+  n elements: a[0] a[1] a[2] . . . a[n-2] a[n-1]
+
+  Pass 1:
+    Sorted: a[0]
+    unsorted: a[1] . . . a[n-1]
+    Element inserted in sorted part: a[1]
+
+    Sorted part: a[0] a[1]
+  Pass 2:
+    Sorted part: a[0] a[1]
+    Unsorted part: a[2] . . . a[n-1]
+    Element inserted into sorted part: a[2]
+
+    Sorted part: a[0] a[1] a[2]
+  . . .
+
+  Pass n-1:
+    Sorted part: a[0] a[1] a[2] . . . a[n-2]
+    unsorted part: a[n-1]
+    Element inserted into sorted part: a[n-1]
+```
++ Example
+```
+
+  [45] [23] [32] [10] [30] [12] [66] [28]
+
+  Pass 1:
+    sorted: [45]
+    unsorted: [23] [32] [10] [30] [12] [66] [28]
+    Insert [23] into sorted
+
+    => Sorted: [23] [45]
+  Pass 2:
+    sorted: [23] [45]
+    unsorted: [32] [10] [30] [12] [66] [28]
+    Insert [32] into sorted
+
+    => Sorted: [23] [32] [45]
+
+```
